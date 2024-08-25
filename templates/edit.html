@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block userprofile %}
+<li class="hidden md:flex md:justify-start mt-10 items-center justify-center gap-3 md:w-fit mr-4 px-4 py-2 bg-[#16181c] rounded-3xl ">
+    <span class="material-symbols-outlined">person</span>
+    <div class="w-full">
+        <div class="font-bold text-xl">{{ userprofile.name }}</div>
+        <div class="text-gray-500 text-sm">@{{ userprofile.username }}</div>
+    </div>
+</li>
+{% endblock %}
+
+{% block who_to_follow %}
+    {% for user in who_to_follow %}
+        <div class="item p-3 items-center gap-2 flex justify-between hover:bg-gray-800 cursor-pointer">
+            <div class="flex gap-3">
+                <div class="p2">
+                    <div>{{ user.name }}</div>
+                    <div class="text-gray-500">@{{ user.username }}</div>
+                </div>
+            </div>
+            <div class="p3">
+                <form action="{{ url_for('index') }}" method="post">
+                    <input type="hidden" name="follow_user_id" value="{{ user.id }}">
+                    {% if user.id in follower_ids %}
+                        <input type="hidden" name="action" value="unfollow">
+                        <button type="submit" class="bg-white text-black px-5 py-2 rounded-full font-bold">Unfollow</button>
+                    {% else %}
+                        <input type="hidden" name="action" value="follow">
+                        <button type="submit" class="bg-gray-700 text-white px-5 py-2 rounded-full font-bold">Follow</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block main %}
+    <div class="top b-3 p-2">
+        <div class="w-full flex justify-center text-lg font-bold">Edit Your Profile</div>
+    </div>
+    <div class="h-[1px] w-full bg-gray-700 my-1"></div>
+    <div class="edit-form p-4">
+        <form action="{{ url_for('edit_profile') }}" method="post">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-400">Full Name</label>
+                <input type="text" id="name" name="name" class="w-full p-2 bg-gray-800 text-white rounded-md" value="{{ userprofile.name }}" required>
+            </div>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-400">Username</label>
+                <input type="text" id="username" name="username" class="w-full p-2 bg-gray-800 text-white rounded-md" value="{{ userprofile.username }}" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-400">Email</label>
+                <input type="email" id="email" name="email" class="w-full p-2 bg-gray-800 text-white rounded-md" value="{{ userprofile.email }}" required>
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full font-bold">Save Changes</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

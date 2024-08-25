@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postee / {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/logo.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+{% if session["user_id"] %}
+<body class="bg-black text-white min-h-screen">
+    <div class="flex md:container mx-auto min-h-screen">
+        <!-- Sidebar (Left) -->
+        <div class="w-16 md:w-[70%] border-r border-gray-700 sticky top-0 h-screen">
+            <div class="sidebar flex md:items-end flex-col h-screen">
+                <div class="logo my-4 self-start mx-2 md:mx-16">
+                    <img class="hidden md:block" src="/static/postee.png" alt="Postee">
+                    <img class="md:hidden" src="/static/logo.png" alt="Postee">
+                </div>
+                <ul class="flex flex-col text-2xl space-y-3 md:px-11 font-bold w-full">
+                    <li
+                        class="flex md:justify-start items-center font-bold justify-center gap-3 md:w-fit mr-4 px-4 py-2 hover:bg-gray-900 hover:cursor-pointer hover:rounded-full">
+                        <span class="material-symbols-outlined">home</span><span class="hidden md:block"><a href="/">Home</a></span>
+                    </li>
+                    <li
+                        class="flex md:justify-start items-center font-bold justify-center gap-3 md:w-fit mr-4 px-4 py-2 hover:bg-gray-900 hover:cursor-pointer hover:rounded-full">
+                        <span class="material-symbols-outlined">edit</span><span
+                            class="hidden md:block"><a href="/edit-profile">Edit Profile</a></span>
+                    </li>
+                    <li
+                        class="flex md:justify-start items-center font-bold justify-center gap-3 md:w-fit mr-4 px-4 py-2 hover:bg-gray-900 hover:cursor-pointer hover:rounded-full">
+                        <span class="material-symbols-outlined">logout</span><span
+                            class="hidden md:block"><a href="/logout">Logout</a></span>
+                    </li>
+                    <li>
+                        <div class="button w-full text-center my-4">
+                            <a href="/post">
+                                <button
+                                    class="hidden md:block bg-[#1d9bf0] px-20 text-xl rounded-full py-3 text-white">Post</button>
+                                <button class="md:hidden bg-[#1d9bf0] px-2 md:px-4 text-xl rounded-full py-1 md:py-3 text-white">
+                                    <span class="material-symbols-outlined">draw</span>
+                                </button>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        {% block userprofile %}{% endblock %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content (Not Sticky) -->
+        <main class="w-full border-y-0 border-gray-700 overflow-y-auto">
+            <div>
+                {% block main %}{% endblock %}
+            </div>
+        </main>
+
+        <!-- Sidebar (Right) -->
+        <div class="w-full hidden md:block border-l border-gray-700">
+            <!-- Who to Follow content here -->
+            <div class="who m-3 bg-[#16181c] w-1/2 py-5 rounded-xl space-y-1 sticky top-0">
+                <h1 class="text-xl font-bold px-3">Who To Follow</h1>
+                {% block who_to_follow %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+
+{% else %}
+    {% block body %}{% endblock %}
+{% endif %}
+
+</html>

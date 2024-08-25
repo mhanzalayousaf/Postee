@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Post
+{% endblock %}
+
+{% block userprofile %}
+<li class="hidden md:flex md:justify-start mt-10 items-center justify-center gap-3 md:w-fit mr-4 px-4 py-2 bg-[#16181c] rounded-3xl ">
+    <span class="material-symbols-outlined">person</span>
+    <div class="w-full">
+        <div class="font-bold text-xl">{{ userprofile.name }}</div>
+        <div class="text-gray-500 text-sm">@{{ userprofile.username }}</div>
+    </div>
+</li>
+{% endblock %}
+
+{% block who_to_follow %}
+    {% for user in who_to_follow %}
+        <div class="item p-3 items-center gap-2 flex justify-between hover:bg-gray-800 cursor-pointer">
+            <div class="flex gap-3">
+                <div class="p2">
+                    <div>{{ user.name }}</div>
+                    <div class="text-gray-500">@{{ user.username }}</div>
+                </div>
+            </div>
+            <div class="p3">
+                <form action="{{ url_for('index') }}" method="post">
+                    <input type="hidden" name="follow_user_id" value="{{ user.id }}">
+                    {% if user.id in follower_ids %}
+                        <input type="hidden" name="action" value="unfollow">
+                        <button type="submit" class="bg-white text-black px-5 py-2 rounded-full font-bold">Unfollow</button>
+                    {% else %}
+                        <input type="hidden" name="action" value="follow">
+                        <button type="submit" class="bg-gray-700 text-white px-5 py-2 rounded-full font-bold">Follow</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block main %}
+    <div class="top b-3 p-2">
+        <div class="w-full flex justify-center text-lg font-bold">Post Here</div>
+    </div>
+    <div class="h-[1px] w-full bg-gray-700 my-1"></div>
+    <form action="{{ url_for('post') }}" method="post">
+        <textarea name="post" rows="4" class="w-full p-2 bg-black text-white border border-gray-600 rounded-lg" placeholder="What's on your mind?"></textarea>
+        <div class="flex justify-end m-2">
+            <button type="submit" class="bg-[#1d9bf0] text-white px-4 py-2 rounded-lg">Post</button>
+        </div>
+    </form>
+    <div class="h-[1px] w-full bg-gray-700 my-1"></div>
+    <div class="top b-3 p-2 m-3">
+        <div class="w-full flex justify-center text-lg font-bold">Your Posts</div>
+    </div>
+    <div class="h-[1px] w-full bg-gray-700 my-1"></div>
+    {% for post in posts %}
+        <div class="m-3">           
+            <div class="mb-3">
+                <span class="text-gray-500">{{ post.timing }}</span>
+                <div class="mt-1">{{ post.post | replace('\n', '<br>') | safe }}</div>
+            </div>
+        </div>
+        <div class="flex justify-end mt-2">
+            <form method="POST" action="{{ url_for('post') }}">
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <button type="submit" name="action" value="delete" class="bg-[#1d9bf0] text-white px-4 py-2 rounded-lg m-2">Delete</button>
+            </form>
+        </div>
+        <div class="h-[1px] bg-gray-700 w-full"></div>
+    {% endfor %}
+{% endblock %}
