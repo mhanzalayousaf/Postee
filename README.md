@@ -31,13 +31,13 @@ Postee is a web application developed for the CS50X final project. It allows use
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/mhanzalayousaf/postee.git
+    git clone https://github.com/mhanzalayousaf/Postee.git
     ```
 
 2. **Navigate to the Project Directory:**
 
     ```bash
-    cd postee
+    cd Postee
     ```
 
 3. **Set Up a Virtual Environment:**
