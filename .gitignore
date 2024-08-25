@@ -1,0 +1,37 @@
+# Ignore Python cache files
+__pycache__/
+
+# Ignore Flask session files
+flask_session/
+
+# Ignore SQLite database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore Node.js modules and related files
+node_modules/
+package-lock.json
+package.json
+
+# Ignore log files
+*.log
+
+# Ignore Tailwind CSS configuration
+tailwind.config.js
+
+# Ignore SQL log file
+log.sql
+
+# Ignore other specific files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore temporary files
+*.swp
+*.swo
+
+# Ignore specific IDE or editor files (optional)
+.vscode/
+.idea/
